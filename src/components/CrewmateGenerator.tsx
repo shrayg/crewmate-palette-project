@@ -17,6 +17,27 @@ export function CrewmateGenerator() {
       {/* Starfield background */}
       <div className="starfield" />
       
+      {/* Community Button - Top Right */}
+      <div className="absolute top-4 right-4 z-20">
+        <a 
+          href="https://x.com/i/communities/1948484175268336110"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-3 py-2 bg-black/80 hover:bg-black/90 border border-gray-600 rounded-lg text-white text-sm font-hey-comic transition-all duration-200 hover:scale-105 backdrop-blur-sm"
+        >
+          <svg 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="currentColor"
+            className="text-white"
+          >
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+          Community
+        </a>
+      </div>
+      
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center space-y-4 mb-8">
