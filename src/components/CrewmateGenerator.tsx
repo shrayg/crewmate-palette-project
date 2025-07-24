@@ -9,6 +9,7 @@ export function CrewmateGenerator() {
     selectItem,
     randomizeCharacter,
     downloadCharacter,
+    clearCharacter,
   } = useCrewmateGenerator();
 
   return (
@@ -19,7 +20,7 @@ export function CrewmateGenerator() {
       <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center space-y-4 mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-space-purple via-space-blue to-space-purple bg-clip-text text-transparent animate-pulse-slow">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-space-purple via-space-blue to-space-purple bg-clip-text text-transparent font-hey-comic">
             Crewmate Generator
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -35,6 +36,7 @@ export function CrewmateGenerator() {
               character={currentCharacter}
               onRandomize={randomizeCharacter}
               onDownload={downloadCharacter}
+              onReset={clearCharacter}
             />
           </div>
 

@@ -1,16 +1,17 @@
 import { CurrentCharacter } from '@/types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, Shuffle } from 'lucide-react';
+import { Download, Shuffle, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface CharacterPreviewProps {
   character: CurrentCharacter;
   onRandomize: () => void;
   onDownload: () => void;
+  onReset: () => void;
 }
 
-export function CharacterPreview({ character, onRandomize, onDownload }: CharacterPreviewProps) {
+export function CharacterPreview({ character, onRandomize, onDownload, onReset }: CharacterPreviewProps) {
   const { toast } = useToast();
 
   const handleDownload = () => {
@@ -29,11 +30,19 @@ export function CharacterPreview({ character, onRandomize, onDownload }: Charact
     });
   };
 
+  const handleReset = () => {
+    onReset();
+    toast({
+      title: "Character Reset",
+      description: "All character selections have been cleared.",
+    });
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-space-purple to-space-blue bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-space-purple to-space-blue bg-clip-text text-transparent mb-2 font-hey-comic">
           Character Preview
         </h2>
         <p className="text-sm text-muted-foreground">
@@ -150,16 +159,30 @@ export function CharacterPreview({ character, onRandomize, onDownload }: Charact
 
       {/* Action Buttons */}
       <div className="space-y-3">
-        <Button 
-          variant="space" 
-          size="lg"
-          onClick={handleRandomize}
-          className="w-full"
-        >
-          <Shuffle className="w-5 h-5" />
-          Randomize Character
-        </Button>
+        {/* Top row with Reset and Randomize buttons */}
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            size="default"
+            onClick={handleReset}
+            className="flex-1"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Reset
+          </Button>
+          
+          <Button 
+            variant="space" 
+            size="default"
+            onClick={handleRandomize}
+            className="flex-1"
+          >
+            <Shuffle className="w-4 h-4" />
+            Randomize
+          </Button>
+        </div>
         
+        {/* Download button full width */}
         <Button 
           variant="outline" 
           size="lg"

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hey Comic Font */
+@font-face {
+  font-family: 'Hey Comic';
+  src: url('/hey-comic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Space-themed design system for Among Us Crewmate Generator */
 
 @layer base {
@@ -83,6 +92,7 @@
     @apply bg-background text-foreground overflow-x-hidden;
     background: linear-gradient(135deg, hsl(var(--background)), hsl(220 35% 6%));
     min-height: 100vh;
+    font-family: 'Hey Comic', sans-serif;
   }
 
   /* Starfield animation */

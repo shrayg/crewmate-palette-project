@@ -136,7 +136,7 @@ export function CategorySelector({
     <div className="h-full flex flex-col">
       {/* Header */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-space-purple to-space-blue bg-clip-text text-transparent mb-2">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-space-purple to-space-blue bg-clip-text text-transparent mb-2 font-hey-comic">
           Customize Character
         </h2>
         <p className="text-sm text-muted-foreground">
