@@ -1,76 +1,65 @@
-import { CategoryTabs } from './CategoryTabs';
-import { ItemGrid } from './ItemGrid';
-import { ControlPanel } from './ControlPanel';
-import { GeneratedCharacters } from './GeneratedCharacters';
+import { CharacterPreview } from './CharacterPreview';
+import { CategorySelector } from './CategorySelector';
 import { useCrewmateGenerator } from '@/hooks/useCrewmateGenerator';
-import { Card } from '@/components/ui/card';
 
 export function CrewmateGenerator() {
   const {
     data,
-    generatedCharacters,
-    activeCategory,
-    setActiveCategory,
-    toggleItem,
-    toggleAlwaysInclude,
-    disableAllInCategory,
-    clearAllSelections,
-    generateCharacters,
-    downloadCharacters,
+    currentCharacter,
+    selectItem,
+    randomizeCharacter,
+    downloadCharacter,
   } = useCrewmateGenerator();
-
-  const currentItems = data[activeCategory];
 
   return (
     <div className="min-h-screen relative">
       {/* Starfield background */}
       <div className="starfield" />
       
-      <div className="relative z-10 container mx-auto px-4 py-8 space-y-8">
+      <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 mb-8">
           <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-space-purple via-space-blue to-space-purple bg-clip-text text-transparent animate-pulse-slow">
             Crewmate Generator
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Create unique Among Us characters with custom combinations of colors, outfits, pets, hats, and visors.
+            Create unique Among Us characters by selecting colors, outfits, pets, hats, and visors.
           </p>
         </div>
 
-        {/* Control Panel */}
-        <ControlPanel
-          generatedCount={generatedCharacters.length}
-          onGenerate={() => generateCharacters(10)}
-          onClearAll={clearAllSelections}
-          onDownload={downloadCharacters}
-        />
+        {/* Main Layout - Split View */}
+        <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {/* Left Side - Character Preview */}
+          <div className="lg:sticky lg:top-8 h-fit">
+            <CharacterPreview
+              character={currentCharacter}
+              onRandomize={randomizeCharacter}
+              onDownload={downloadCharacter}
+            />
+          </div>
 
-        {/* Generated Characters */}
-        {generatedCharacters.length > 0 && (
-          <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/30">
-            <GeneratedCharacters characters={generatedCharacters} />
-          </Card>
-        )}
-
-        {/* Category Selection */}
-        <Card className="p-6 bg-card/50 backdrop-blur-sm border-primary/30">
-          <CategoryTabs
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-          />
-          
-          {/* Item Grid */}
-          <ItemGrid
-            items={currentItems}
-            category={activeCategory}
-            onToggleItem={(itemId) => toggleItem(activeCategory, itemId)}
-            onToggleAlwaysInclude={(itemId) => toggleAlwaysInclude(activeCategory, itemId)}
-            onDisableAll={() => disableAllInCategory(activeCategory)}
-          />
-        </Card>
+          {/* Right Side - Category Selector */}
+          <div className="min-h-[600px]">
+            <CategorySelector
+              crewmates={data.crewmates}
+              trousers={data.trousers}
+              pets={data.pets}
+              hats={data.hats}
+              visors={data.visors}
+              selectedItems={{
+                crewmate: currentCharacter.crewmate,
+                trouser: currentCharacter.trouser,
+                pet: currentCharacter.pet,
+                hat: currentCharacter.hat,
+                visor: currentCharacter.visor,
+              }}
+              onSelectItem={selectItem}
+            />
+          </div>
+        </div>
 
         {/* Footer */}
-        <div className="text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground mt-16">
           <p>
             Inspired by Among Us • Built with React & TypeScript
           </p>

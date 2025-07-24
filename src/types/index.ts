@@ -16,8 +16,8 @@ export interface CrewmateData {
 
 export type ItemCategory = 'crewmates' | 'trousers' | 'pets' | 'hats' | 'visors';
 
-export interface GeneratedCharacter {
-  crewmate: CrewmateItem;
+export interface CurrentCharacter {
+  crewmate?: CrewmateItem;
   trouser?: CrewmateItem;
   pet?: CrewmateItem;
   hat?: CrewmateItem;
