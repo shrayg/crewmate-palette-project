@@ -52,6 +52,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				'space-purple': 'hsl(var(--space-purple))',
+				'space-blue': 'hsl(var(--space-blue))',
+				'space-dark': 'hsl(var(--space-dark))',
+				'space-card': 'hsl(var(--space-card))',
+				'space-border': 'hsl(var(--space-border))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -88,9 +93,17 @@ export default {
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'glow': 'glow 2s ease-in-out infinite alternate',
+				'float': 'float 3s ease-in-out infinite',
+				'pulse-slow': 'pulse 3s ease-in-out infinite'
 			}
 		}
 	},
+	safelist: [
+		{
+			pattern: /bg-(red|blue|green|yellow|orange|purple|cyan|pink|white|black|lime|brown|rose|gray)-(400|500|600)/,
+		}
+	],
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
