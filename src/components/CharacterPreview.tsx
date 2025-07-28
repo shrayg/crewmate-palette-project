@@ -100,11 +100,11 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
                 
                 {/* Pet positioned separately */}
                 {character.pet && (
-                  <div className="absolute bottom-4 right-4">
+                  <div className="absolute bottom-8 right-8">
                     <img
                       src={character.pet.imageUrl}
                       alt={character.pet.name}
-                      className="w-20 h-20 object-contain drop-shadow-lg"
+                      className="w-16 h-16 object-contain drop-shadow-lg"
                     />
                   </div>
                 )}

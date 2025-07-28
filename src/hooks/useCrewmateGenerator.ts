@@ -65,90 +65,40 @@ export function useCrewmateGenerator() {
     setCurrentCharacter({});
   }, []);
 
-  const downloadCharacter = useCallback(async () => {
+  const downloadCharacter = useCallback(() => {
     if (!currentCharacter.crewmate) return;
     
-    try {
-      // Create a canvas to render the character
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      
-      // Set canvas size
-      const canvasSize = 600;
-      canvas.width = canvasSize;
-      canvas.height = canvasSize;
-      
-      // Set background to transparent
-      ctx.clearRect(0, 0, canvasSize, canvasSize);
-      
-      // Helper function to load and draw image
-      const loadAndDrawImage = (src: string, x: number, y: number, width: number, height: number): Promise<void> => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = () => {
-            try {
-              ctx.drawImage(img, x, y, width, height);
-              resolve();
-            } catch (e) {
-              reject(e);
-            }
-          };
-          img.onerror = () => {
-            reject(new Error(`Failed to load image: ${src}`));
-          };
-          img.src = src;
-        });
-      };
-      
-      // Calculate dimensions for main character
-      const mainSize = canvasSize * 0.7;
-      const mainX = (canvasSize - mainSize) / 2;
-      const mainY = (canvasSize - mainSize) / 2;
-      
-      // Draw layers sequentially
-      if (currentCharacter.crewmate) {
-        await loadAndDrawImage(currentCharacter.crewmate.imageUrl, mainX, mainY, mainSize, mainSize);
+    // Create character data object
+    const characterData = {
+      timestamp: new Date().toISOString(),
+      character: {
+        crewmate: currentCharacter.crewmate?.name,
+        trouser: currentCharacter.trouser?.name || null,
+        hat: currentCharacter.hat?.name || null,
+        pet: currentCharacter.pet?.name || null,
+        visor: currentCharacter.visor?.name || null,
+      },
+      imageUrls: {
+        crewmate: currentCharacter.crewmate?.imageUrl,
+        trouser: currentCharacter.trouser?.imageUrl || null,
+        hat: currentCharacter.hat?.imageUrl || null,
+        pet: currentCharacter.pet?.imageUrl || null,
+        visor: currentCharacter.visor?.imageUrl || null,
       }
-      
-      if (currentCharacter.trouser) {
-        await loadAndDrawImage(currentCharacter.trouser.imageUrl, mainX, mainY, mainSize, mainSize);
-      }
-      
-      if (currentCharacter.hat) {
-        await loadAndDrawImage(currentCharacter.hat.imageUrl, mainX, mainY, mainSize, mainSize);
-      }
-      
-      if (currentCharacter.visor) {
-        await loadAndDrawImage(currentCharacter.visor.imageUrl, mainX, mainY, mainSize, mainSize);
-      }
-      
-      // Pet positioned in bottom right
-      if (currentCharacter.pet) {
-        const petSize = canvasSize * 0.15;
-        const petX = canvasSize - petSize - 30;
-        const petY = canvasSize - petSize - 30;
-        await loadAndDrawImage(currentCharacter.pet.imageUrl, petX, petY, petSize, petSize);
-      }
-      
-      // Create download link
-      canvas.toBlob((blob) => {
-        if (!blob) return;
-        
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `crewmate-${currentCharacter.crewmate!.name.toLowerCase()}-${Date.now()}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-      }, 'image/png');
-      
-    } catch (error) {
-      console.error('Error downloading character:', error);
-    }
+    };
+    
+    // Create and download JSON file
+    const dataStr = JSON.stringify(characterData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `crewmate-${currentCharacter.crewmate.name.toLowerCase()}-${Date.now()}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   }, [currentCharacter]);
 
   return {
