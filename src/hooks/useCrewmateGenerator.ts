@@ -78,7 +78,7 @@ export function useCrewmateGenerator() {
       }
       
       // Use html2canvas with proper options
-      const originalCanvas = await html2canvas(previewElement, {
+      const canvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
         scale: 2,
         logging: false,
@@ -88,23 +88,8 @@ export function useCrewmateGenerator() {
         height: previewElement.offsetHeight,
       });
       
-      // Create a square canvas with the larger dimension
-      const maxDimension = Math.max(originalCanvas.width, originalCanvas.height);
-      const squareCanvas = document.createElement('canvas');
-      squareCanvas.width = maxDimension;
-      squareCanvas.height = maxDimension;
-      
-      const ctx = squareCanvas.getContext('2d');
-      if (!ctx) return;
-      
-      // Center the original canvas on the square canvas
-      const offsetX = (maxDimension - originalCanvas.width) / 2;
-      const offsetY = (maxDimension - originalCanvas.height) / 2;
-      
-      ctx.drawImage(originalCanvas, offsetX, offsetY);
-      
-      // Download the square canvas as PNG
-      squareCanvas.toBlob((blob) => {
+      // Download the canvas as PNG (preserving original aspect ratio)
+      canvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
