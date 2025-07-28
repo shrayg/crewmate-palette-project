@@ -1,13 +1,10 @@
 import { CrewmateData } from '@/types';
 
-// Base URL for assets
-const BASE_URL = 'https://crewmategenerator.umalwerunity.com';
-
 // Generate crewmates data (18 colors)
 const crewmates = Array.from({ length: 18 }, (_, i) => ({
   id: `crewmate-${i}`,
   name: getCrewmateName(i),
-  imageUrl: `${BASE_URL}/Crewmates/${i}.png`,
+  imageUrl: `/crewmates/${i}.png`,
   enabled: true,
 }));
 
@@ -15,7 +12,7 @@ const crewmates = Array.from({ length: 18 }, (_, i) => ({
 const trousers = Array.from({ length: 16 }, (_, i) => ({
   id: `trouser-${i + 1}`,
   name: `Trouser ${i + 1}`,
-  imageUrl: `${BASE_URL}/Trousers/${i + 1}.png`,
+  imageUrl: `/trousers/${i + 1}.png`,
   enabled: true,
 }));
 
@@ -23,7 +20,7 @@ const trousers = Array.from({ length: 16 }, (_, i) => ({
 const pets = Array.from({ length: 15 }, (_, i) => ({
   id: `pet-${i + 1}`,
   name: `Pet ${i + 1}`,
-  imageUrl: `${BASE_URL}/Pets/${i + 1}.png`,
+  imageUrl: `/pets/${i + 1}.png`,
   enabled: true,
 }));
 
@@ -31,7 +28,7 @@ const pets = Array.from({ length: 15 }, (_, i) => ({
 const hats = Array.from({ length: 68 }, (_, i) => ({
   id: `hat-${i + 1}`,
   name: `Hat ${i + 1}`,
-  imageUrl: `${BASE_URL}/Hats/${i + 1}.png`,
+  imageUrl: `/hats/${i + 1}.png`,
   enabled: true,
 }));
 
@@ -40,19 +37,19 @@ const visors = [
   {
     id: 'visor-angery',
     name: 'Angery',
-    imageUrl: `${BASE_URL}/Visors/angery.png`,
+    imageUrl: `/visors/angery.png`,
     enabled: true,
   },
   {
     id: 'visor-note-2-self',
     name: 'Note 2 Self',
-    imageUrl: `${BASE_URL}/Visors/note_2_self.png`,
+    imageUrl: `/visors/note_2_self.png`,
     enabled: true,
   },
   {
     id: 'visor-safe-not-sorry',
     name: 'Safe Not Sorry',
-    imageUrl: `${BASE_URL}/Visors/safe_not_sorry.png`,
+    imageUrl: `/visors/safe_not_sorry.png`,
     enabled: true,
   },
 ];

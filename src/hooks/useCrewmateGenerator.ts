@@ -77,18 +77,15 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Use html2canvas with options to handle CORS
+      // Use html2canvas with proper options
       const canvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
         scale: 2,
         logging: false,
-        useCORS: false, // Disable CORS to avoid blocking
-        allowTaint: true, // Allow tainted canvas
-        foreignObjectRendering: true, // Use foreign object rendering
-        ignoreElements: (element) => {
-          // Skip elements that might cause CORS issues
-          return element.tagName === 'IMG' && element.getAttribute('src')?.includes('crewmategenerator.umalwerunity.com');
-        }
+        useCORS: true,
+        allowTaint: false,
+        width: previewElement.offsetWidth,
+        height: previewElement.offsetHeight,
       });
       
       // Download the canvas as PNG
