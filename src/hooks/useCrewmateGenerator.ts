@@ -77,13 +77,18 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Capture the element as canvas
+      // Use html2canvas with options to handle CORS
       const canvas = await html2canvas(previewElement, {
-        backgroundColor: null,
+        backgroundColor: 'transparent',
         scale: 2,
         logging: false,
-        useCORS: true,
-        allowTaint: true
+        useCORS: false, // Disable CORS to avoid blocking
+        allowTaint: true, // Allow tainted canvas
+        foreignObjectRendering: true, // Use foreign object rendering
+        ignoreElements: (element) => {
+          // Skip elements that might cause CORS issues
+          return element.tagName === 'IMG' && element.getAttribute('src')?.includes('crewmategenerator.umalwerunity.com');
+        }
       });
       
       // Download the canvas as PNG
@@ -102,6 +107,29 @@ export function useCrewmateGenerator() {
       
     } catch (error) {
       console.error('Error downloading character:', error);
+      // Fallback to JSON download if canvas fails
+      const characterData = {
+        timestamp: new Date().toISOString(),
+        character: {
+          crewmate: currentCharacter.crewmate?.name,
+          trouser: currentCharacter.trouser?.name || null,
+          hat: currentCharacter.hat?.name || null,
+          pet: currentCharacter.pet?.name || null,
+          visor: currentCharacter.visor?.name || null,
+        }
+      };
+      
+      const dataStr = JSON.stringify(characterData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `crewmate-${currentCharacter.crewmate.name.toLowerCase()}-${Date.now()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
     }
   }, [currentCharacter]);
 
