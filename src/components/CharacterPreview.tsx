@@ -53,7 +53,7 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
       {/* Character Display */}
       <Card className="flex-1 p-8 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border-primary/30 mb-6">
         <div className="h-full flex items-center justify-center">
-          <div className="relative w-80 h-80 border-2 border-dashed border-primary/30 rounded-xl bg-gradient-to-br from-muted/10 to-muted/30 overflow-hidden">
+          <div className="relative w-80 h-80 border-2 border-dashed border-primary/30 rounded-xl bg-gradient-to-br from-muted/10 to-muted/30 overflow-hidden" data-character-preview>
             {character.crewmate ? (
               <>
                 {/* Base crewmate */}

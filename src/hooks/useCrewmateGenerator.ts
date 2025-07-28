@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { CrewmateData, CrewmateItem, ItemCategory, CurrentCharacter } from '@/types';
 import { crewmateData } from '@/data/crewmateData';
+import html2canvas from 'html2canvas';
 
 export function useCrewmateGenerator() {
   const [data] = useState<CrewmateData>(crewmateData);
@@ -65,40 +66,43 @@ export function useCrewmateGenerator() {
     setCurrentCharacter({});
   }, []);
 
-  const downloadCharacter = useCallback(() => {
+  const downloadCharacter = useCallback(async () => {
     if (!currentCharacter.crewmate) return;
     
-    // Create character data object
-    const characterData = {
-      timestamp: new Date().toISOString(),
-      character: {
-        crewmate: currentCharacter.crewmate?.name,
-        trouser: currentCharacter.trouser?.name || null,
-        hat: currentCharacter.hat?.name || null,
-        pet: currentCharacter.pet?.name || null,
-        visor: currentCharacter.visor?.name || null,
-      },
-      imageUrls: {
-        crewmate: currentCharacter.crewmate?.imageUrl,
-        trouser: currentCharacter.trouser?.imageUrl || null,
-        hat: currentCharacter.hat?.imageUrl || null,
-        pet: currentCharacter.pet?.imageUrl || null,
-        visor: currentCharacter.visor?.imageUrl || null,
+    try {
+      // Find the character preview element
+      const previewElement = document.querySelector('[data-character-preview]') as HTMLElement;
+      if (!previewElement) {
+        console.error('Character preview element not found');
+        return;
       }
-    };
-    
-    // Create and download JSON file
-    const dataStr = JSON.stringify(characterData, null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `crewmate-${currentCharacter.crewmate.name.toLowerCase()}-${Date.now()}.json`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+      
+      // Capture the element as canvas
+      const canvas = await html2canvas(previewElement, {
+        backgroundColor: null,
+        scale: 2,
+        logging: false,
+        useCORS: true,
+        allowTaint: true
+      });
+      
+      // Download the canvas as PNG
+      canvas.toBlob((blob) => {
+        if (!blob) return;
+        
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `crewmate-${currentCharacter.crewmate!.name.toLowerCase()}-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+      
+    } catch (error) {
+      console.error('Error downloading character:', error);
+    }
   }, [currentCharacter]);
 
   return {
