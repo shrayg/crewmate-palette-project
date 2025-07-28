@@ -1,55 +1,36 @@
 import { CrewmateData } from '@/types';
 
-// Generate crewmates data (18 colors)
-const crewmates = Array.from({ length: 18 }, (_, i) => ({
-  id: `crewmate-${i}`,
-  name: getCrewmateName(i),
-  imageUrl: `/crewmates/${i}.png`,
-  enabled: true,
-}));
+// Available crewmate colors
+const crewmates = [
+  { id: 'crewmate-red', name: 'Red', imageUrl: '/crewmates/red.png', enabled: true },
+  { id: 'crewmate-blue', name: 'Blue', imageUrl: '/crewmates/blue.png', enabled: true },
+  { id: 'crewmate-green', name: 'Green', imageUrl: '/crewmates/green.png', enabled: true },
+  { id: 'crewmate-pink', name: 'Pink', imageUrl: '/crewmates/pink.png', enabled: true },
+  { id: 'crewmate-orange', name: 'Orange', imageUrl: '/crewmates/orange.png', enabled: true },
+  { id: 'crewmate-yellow', name: 'Yellow', imageUrl: '/crewmates/yellow.png', enabled: true },
+];
 
-// Generate trousers data (16 items)
-const trousers = Array.from({ length: 16 }, (_, i) => ({
-  id: `trouser-${i + 1}`,
-  name: `Trouser ${i + 1}`,
-  imageUrl: `/trousers/${i + 1}.png`,
-  enabled: true,
-}));
+// Available trousers (only 1 exists)
+const trousers = [
+  { id: 'trouser-1', name: 'Trouser 1', imageUrl: '/trousers/1.png', enabled: true },
+];
 
-// Generate pets data (15 items)
-const pets = Array.from({ length: 15 }, (_, i) => ({
-  id: `pet-${i + 1}`,
-  name: `Pet ${i + 1}`,
-  imageUrl: `/pets/${i + 1}.png`,
-  enabled: true,
-}));
+// Available pets (only 1 exists)
+const pets = [
+  { id: 'pet-1', name: 'Pet 1', imageUrl: '/pets/1.png', enabled: true },
+];
 
-// Generate hats data (68 items)
-const hats = Array.from({ length: 68 }, (_, i) => ({
-  id: `hat-${i + 1}`,
-  name: `Hat ${i + 1}`,
-  imageUrl: `/hats/${i + 1}.png`,
-  enabled: true,
-}));
+// Available hats (only 1 exists)
+const hats = [
+  { id: 'hat-1', name: 'Hat 1', imageUrl: '/hats/1.png', enabled: true },
+];
 
-// Visors data (3 items with specific names)
+// Available visors (only 1 exists)
 const visors = [
   {
     id: 'visor-angery',
     name: 'Angery',
-    imageUrl: `/visors/angery.png`,
-    enabled: true,
-  },
-  {
-    id: 'visor-note-2-self',
-    name: 'Note 2 Self',
-    imageUrl: `/visors/note_2_self.png`,
-    enabled: true,
-  },
-  {
-    id: 'visor-safe-not-sorry',
-    name: 'Safe Not Sorry',
-    imageUrl: `/visors/safe_not_sorry.png`,
+    imageUrl: '/visors/angery.png',
     enabled: true,
   },
 ];

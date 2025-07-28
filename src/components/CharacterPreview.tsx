@@ -53,62 +53,67 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
       {/* Character Display */}
       <Card className="flex-1 p-8 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border-primary/30 mb-6">
         <div className="h-full flex items-center justify-center">
-          <div className="relative w-80 h-80 border-2 border-dashed border-primary/30 rounded-xl bg-gradient-to-br from-muted/10 to-muted/30 overflow-hidden" data-character-preview>
+          <div className="relative w-80 h-80 bg-transparent" data-character-preview>
             {character.crewmate ? (
-              <>
-                {/* Base crewmate */}
+              <div className="relative w-full h-full">
+                {/* Base crewmate - positioned at center */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <img
                     src={character.crewmate.imageUrl}
                     alt={character.crewmate.name}
-                    className="w-3/4 h-3/4 object-contain drop-shadow-lg"
+                    className="w-48 h-48 object-contain drop-shadow-lg"
+                    style={{ imageRendering: 'pixelated' }}
                   />
                 </div>
                 
-                {/* Trouser layer */}
+                {/* Trouser layer - same position as crewmate */}
                 {character.trouser && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={character.trouser.imageUrl}
                       alt={character.trouser.name}
-                      className="w-3/4 h-3/4 object-contain"
+                      className="w-48 h-48 object-contain"
+                      style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
                 )}
                 
-                {/* Hat layer */}
+                {/* Hat layer - positioned slightly higher */}
                 {character.hat && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={character.hat.imageUrl}
                       alt={character.hat.name}
-                      className="w-3/4 h-3/4 object-contain"
+                      className="w-48 h-48 object-contain"
+                      style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
                 )}
                 
-                {/* Visor layer */}
+                {/* Visor layer - positioned on face */}
                 {character.visor && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={character.visor.imageUrl}
                       alt={character.visor.name}
-                      className="w-3/4 h-3/4 object-contain"
+                      className="w-48 h-48 object-contain"
+                      style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
                 )}
                 
-                {/* Pet positioned separately */}
+                {/* Pet positioned to the side */}
                 {character.pet && (
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="absolute inset-0 flex items-end justify-start pl-4 pb-4">
                     <img
                       src={character.pet.imageUrl}
                       alt={character.pet.name}
-                      className="w-3/4 h-3/4 object-contain drop-shadow-lg"
+                      className="w-16 h-16 object-contain drop-shadow-lg"
+                      style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
                 )}
-              </>
+              </div>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
                 <div className="text-center">
