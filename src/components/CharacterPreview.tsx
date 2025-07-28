@@ -100,11 +100,11 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
                 
                 {/* Pet positioned separately */}
                 {character.pet && (
-                  <div className="absolute bottom-4 right-4">
+                  <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={character.pet.imageUrl}
                       alt={character.pet.name}
-                      className="w-32 h-32 object-contain drop-shadow-lg"
+                      className="w-3/4 h-3/4 object-contain drop-shadow-lg"
                     />
                   </div>
                 )}
