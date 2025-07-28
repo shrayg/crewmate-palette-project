@@ -24,8 +24,8 @@ const pets = Array.from({ length: 15 }, (_, i) => ({
   enabled: true,
 }));
 
-// Generate hats data (68 items)
-const hats = Array.from({ length: 68 }, (_, i) => ({
+// Generate hats data (20 items for now)
+const hats = Array.from({ length: 20 }, (_, i) => ({
   id: `hat-${i + 1}`,
   name: `Hat ${i + 1}`,
   imageUrl: `/hats/${i + 1}.png`,
