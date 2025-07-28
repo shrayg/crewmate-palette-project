@@ -74,8 +74,8 @@ export function useCrewmateGenerator() {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
       
-      // Set canvas size (matching the preview size)
-      const canvasSize = 400; // Higher resolution
+      // Set canvas size
+      const canvasSize = 600;
       canvas.width = canvasSize;
       canvas.height = canvasSize;
       
@@ -86,7 +86,7 @@ export function useCrewmateGenerator() {
       const loadAndDrawImage = (src: string, x: number, y: number, width: number, height: number): Promise<void> => {
         return new Promise((resolve, reject) => {
           const img = new Image();
-          // Remove crossOrigin to avoid CORS issues in development
+          img.crossOrigin = 'anonymous';
           img.onload = () => {
             try {
               ctx.drawImage(img, x, y, width, height);
@@ -95,71 +95,59 @@ export function useCrewmateGenerator() {
               reject(e);
             }
           };
-          img.onerror = (e) => {
-            console.error('Failed to load image:', src, e);
-            reject(e);
+          img.onerror = () => {
+            reject(new Error(`Failed to load image: ${src}`));
           };
           img.src = src;
         });
       };
       
-      // Calculate dimensions for main character (3/4 of canvas)
-      const mainSize = canvasSize * 0.75;
+      // Calculate dimensions for main character
+      const mainSize = canvasSize * 0.7;
       const mainX = (canvasSize - mainSize) / 2;
       const mainY = (canvasSize - mainSize) / 2;
       
-      // Draw layers sequentially to avoid race conditions
-      // Base crewmate (always first)
+      // Draw layers sequentially
       if (currentCharacter.crewmate) {
         await loadAndDrawImage(currentCharacter.crewmate.imageUrl, mainX, mainY, mainSize, mainSize);
       }
       
-      // Trouser layer
       if (currentCharacter.trouser) {
         await loadAndDrawImage(currentCharacter.trouser.imageUrl, mainX, mainY, mainSize, mainSize);
       }
       
-      // Hat layer
       if (currentCharacter.hat) {
         await loadAndDrawImage(currentCharacter.hat.imageUrl, mainX, mainY, mainSize, mainSize);
       }
       
-      // Visor layer
       if (currentCharacter.visor) {
         await loadAndDrawImage(currentCharacter.visor.imageUrl, mainX, mainY, mainSize, mainSize);
       }
       
-      // Pet positioned separately (bottom right)
+      // Pet positioned in bottom right
       if (currentCharacter.pet) {
-        const petSize = canvasSize * 0.2; // 1/5 of canvas
-        const petX = canvasSize - petSize - (canvasSize * 0.05); // 5% margin from right
-        const petY = canvasSize - petSize - (canvasSize * 0.05); // 5% margin from bottom
+        const petSize = canvasSize * 0.15;
+        const petX = canvasSize - petSize - 30;
+        const petY = canvasSize - petSize - 30;
         await loadAndDrawImage(currentCharacter.pet.imageUrl, petX, petY, petSize, petSize);
       }
       
-      // Convert canvas to blob and download
+      // Create download link
       canvas.toBlob((blob) => {
-        if (!blob) {
-          console.error('Failed to create blob from canvas');
-          return;
-        }
+        if (!blob) return;
         
         const url = URL.createObjectURL(blob);
-        const exportFileDefaultName = `crewmate-${currentCharacter.crewmate!.name.toLowerCase()}-${Date.now()}.png`;
-        
-        const linkElement = document.createElement('a');
-        linkElement.setAttribute('href', url);
-        linkElement.setAttribute('download', exportFileDefaultName);
-        document.body.appendChild(linkElement);
-        linkElement.click();
-        document.body.removeChild(linkElement);
-        
-        // Clean up
-        setTimeout(() => URL.revokeObjectURL(url), 100);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `crewmate-${currentCharacter.crewmate!.name.toLowerCase()}-${Date.now()}.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
       }, 'image/png');
       
     } catch (error) {
-      console.error('Error generating character image:', error);
+      console.error('Error downloading character:', error);
     }
   }, [currentCharacter]);
 
