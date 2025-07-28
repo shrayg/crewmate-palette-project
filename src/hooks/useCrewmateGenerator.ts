@@ -77,19 +77,29 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Use html2canvas with proper options
-      const canvas = await html2canvas(previewElement, {
+      // Use html2canvas to capture at 165x360
+      const originalCanvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
-        scale: 2,
+        scale: 1,
         logging: false,
         useCORS: true,
         allowTaint: false,
-        width: previewElement.offsetWidth,
-        height: previewElement.offsetHeight * 2,
+        width: 165,
+        height: 360,
       });
       
-      // Download the canvas as PNG (preserving original aspect ratio)
-      canvas.toBlob((blob) => {
+      // Create a new 360x360 canvas and center the original image
+      const squareCanvas = document.createElement('canvas');
+      squareCanvas.width = 360;
+      squareCanvas.height = 360;
+      const ctx = squareCanvas.getContext('2d')!;
+      
+      // Center the 165x360 image in the 360x360 canvas
+      const offsetX = (360 - 165) / 2;
+      ctx.drawImage(originalCanvas, offsetX, 0);
+      
+      // Download the square canvas as PNG
+      squareCanvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
