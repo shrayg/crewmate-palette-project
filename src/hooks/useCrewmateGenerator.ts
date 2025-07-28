@@ -85,7 +85,7 @@ export function useCrewmateGenerator() {
         useCORS: true,
         allowTaint: false,
         width: previewElement.offsetWidth,
-        height: previewElement.offsetHeight,
+        height: previewElement.offsetHeight * 2,
       });
       
       // Download the canvas as PNG (preserving original aspect ratio)
