@@ -104,11 +104,11 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
                 
                 {/* Pet positioned to the side */}
                 {character.pet && (
-                  <div className="absolute inset-0 flex items-end justify-start pl-4 pb-4">
+                  <div className="absolute inset-0 flex items-center justify-center">
                     <img
                       src={character.pet.imageUrl}
                       alt={character.pet.name}
-                      className="w-16 h-16 object-contain drop-shadow-lg"
+                      className="w-48 h-48 object-contain drop-shadow-lg"
                       style={{ imageRendering: 'pixelated' }}
                     />
                   </div>
