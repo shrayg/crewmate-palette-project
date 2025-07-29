@@ -177,7 +177,7 @@ export function CharacterPreview({ character, twitterHandle, onTwitterHandleChan
       )}
 
       {/* Twitter Handle Input */}
-      <Card className="p-4 bg-card/30 backdrop-blur-sm border-primary/20 mb-6">
+      <Card className="p-3 bg-card/30 backdrop-blur-sm border-primary/20 mb-4">
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground" htmlFor="twitter-handle">
             Twitter Handle (optional)
@@ -187,7 +187,7 @@ export function CharacterPreview({ character, twitterHandle, onTwitterHandleChan
             placeholder="Enter your Twitter handle..."
             value={twitterHandle}
             onChange={(e) => onTwitterHandleChange(e.target.value)}
-            className="bg-input/50 border-primary/30"
+            className="bg-input/50 border-primary/30 h-8 text-sm"
           />
           <p className="text-xs text-muted-foreground">
             Your handle will appear in the bottom right of the downloaded image
@@ -195,20 +195,8 @@ export function CharacterPreview({ character, twitterHandle, onTwitterHandleChan
         </div>
       </Card>
 
-      {/* Contract Address */}
-      <Card className="p-4 bg-card/30 backdrop-blur-sm border-primary/20 mb-6">
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">
-            Contract Address
-          </label>
-          <div className="p-2 bg-input/50 border border-primary/30 rounded text-sm text-muted-foreground">
-            Contract Address
-          </div>
-        </div>
-      </Card>
-
       {/* Action Buttons */}
-      <div className="space-y-3">
+      <div className="space-y-2 flex-shrink-0">
         {/* Top row with Reset and Randomize buttons */}
         <div className="flex gap-2">
           <Button 
