@@ -88,20 +88,18 @@ export function useCrewmateGenerator() {
         height: 320, // Match the preview container height
       });
       
-      // Create square canvas with horizontal padding
-      const squareCanvas = document.createElement('canvas');
-      const squareSize = Math.max(originalCanvas.width, originalCanvas.height);
-      squareCanvas.width = squareSize;
-      squareCanvas.height = squareSize;
-      const ctx = squareCanvas.getContext('2d')!;
+      // Create stretched canvas (2x vertical stretch)
+      const stretchedCanvas = document.createElement('canvas');
+      stretchedCanvas.width = originalCanvas.width;
+      stretchedCanvas.height = originalCanvas.height * 2; // 2x vertical stretch
+      const ctx = stretchedCanvas.getContext('2d')!;
       
-      // Center the original canvas horizontally with transparent padding
-      const offsetX = (squareSize - originalCanvas.width) / 2;
-      const offsetY = (squareSize - originalCanvas.height) / 2;
-      ctx.drawImage(originalCanvas, offsetX, offsetY);
+      // Draw the original canvas stretched vertically
+      ctx.drawImage(originalCanvas, 0, 0, originalCanvas.width, originalCanvas.height, 
+                   0, 0, stretchedCanvas.width, stretchedCanvas.height);
       
-      // Download the square canvas as PNG
-      squareCanvas.toBlob((blob) => {
+      // Download the stretched canvas as PNG
+      stretchedCanvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
