@@ -98,8 +98,20 @@ export function useCrewmateGenerator() {
       ctx.drawImage(originalCanvas, 0, 0, originalCanvas.width, originalCanvas.height, 
                    0, 0, stretchedCanvas.width, stretchedCanvas.height);
       
-      // Download the stretched canvas as PNG
-      stretchedCanvas.toBlob((blob) => {
+      // Create square canvas with transparent padding
+      const squareSize = Math.max(stretchedCanvas.width, stretchedCanvas.height);
+      const squareCanvas = document.createElement('canvas');
+      squareCanvas.width = squareSize;
+      squareCanvas.height = squareSize;
+      const squareCtx = squareCanvas.getContext('2d')!;
+      
+      // Draw the stretched canvas centered in the square canvas
+      const xOffset = (squareSize - stretchedCanvas.width) / 2;
+      const yOffset = (squareSize - stretchedCanvas.height) / 2;
+      squareCtx.drawImage(stretchedCanvas, xOffset, yOffset);
+      
+      // Download the square canvas as PNG
+      squareCanvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
