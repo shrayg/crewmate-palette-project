@@ -15,7 +15,7 @@ export function CrewmateGenerator() {
   } = useCrewmateGenerator();
 
   return (
-    <div className="h-screen overflow-hidden relative">
+    <div className="min-h-screen relative">
       {/* Starfield background */}
       <div className="starfield" />
       
@@ -40,59 +40,56 @@ export function CrewmateGenerator() {
         </a>
       </div>
       
-      <div className="relative z-10 h-full flex flex-col">
+      <div className="relative z-10 container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center space-y-3 pt-6 pb-4 flex-shrink-0">
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-space-purple via-space-blue to-space-purple bg-clip-text text-transparent font-hey-comic">
+        <div className="text-center space-y-4 mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-space-purple via-space-blue to-space-purple bg-clip-text text-transparent font-hey-comic">
             Crewmate Generator
           </h1>
-          <p className="text-base text-muted-foreground max-w-2xl mx-auto px-4">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Create unique Among Us characters by selecting colors, outfits, pets, hats, and visors.
           </p>
-          
-          {/* Contract Address */}
-          <div className="max-w-md mx-auto px-4">
-            <div className="bg-card/30 backdrop-blur-sm border border-primary/20 rounded-lg p-3">
-              <div className="text-xs font-medium text-foreground mb-1">Contract Address</div>
-              <div className="text-xs text-muted-foreground font-mono">Contract Address</div>
-            </div>
-          </div>
         </div>
 
         {/* Main Layout - Split View */}
-        <div className="flex-1 min-h-0 px-4">
-          <div className="grid lg:grid-cols-2 gap-6 h-full max-w-7xl mx-auto">
-            {/* Left Side - Character Preview */}
-            <div className="flex flex-col min-h-0">
-              <CharacterPreview
-                character={currentCharacter}
-                twitterHandle={twitterHandle}
-                onTwitterHandleChange={setTwitterHandle}
-                onRandomize={randomizeCharacter}
-                onDownload={downloadCharacter}
-                onReset={clearCharacter}
-              />
-            </div>
-
-            {/* Right Side - Category Selector */}
-            <div className="min-h-0">
-              <CategorySelector
-                crewmates={data.crewmates}
-                trousers={data.trousers}
-                pets={data.pets}
-                hats={data.hats}
-                visors={data.visors}
-                selectedItems={{
-                  crewmate: currentCharacter.crewmate,
-                  trouser: currentCharacter.trouser,
-                  pet: currentCharacter.pet,
-                  hat: currentCharacter.hat,
-                  visor: currentCharacter.visor,
-                }}
-                onSelectItem={selectItem}
-              />
-            </div>
+        <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          {/* Left Side - Character Preview */}
+          <div className="lg:sticky lg:top-8 h-fit">
+            <CharacterPreview
+              character={currentCharacter}
+              twitterHandle={twitterHandle}
+              onTwitterHandleChange={setTwitterHandle}
+              onRandomize={randomizeCharacter}
+              onDownload={downloadCharacter}
+              onReset={clearCharacter}
+            />
           </div>
+
+          {/* Right Side - Category Selector */}
+          <div className="min-h-[600px]">
+            <CategorySelector
+              crewmates={data.crewmates}
+              trousers={data.trousers}
+              pets={data.pets}
+              hats={data.hats}
+              visors={data.visors}
+              selectedItems={{
+                crewmate: currentCharacter.crewmate,
+                trouser: currentCharacter.trouser,
+                pet: currentCharacter.pet,
+                hat: currentCharacter.hat,
+                visor: currentCharacter.visor,
+              }}
+              onSelectItem={selectItem}
+            />
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center text-sm text-muted-foreground mt-16">
+          <p>
+            Inspired by Among Us • Built with React & TypeScript
+          </p>
         </div>
       </div>
     </div>
