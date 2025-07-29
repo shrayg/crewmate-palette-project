@@ -77,29 +77,32 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Capture at exact 165x360 dimensions to match local files
+      // Capture the element at its natural displayed size
       const originalCanvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
         scale: 1,
         logging: false,
         useCORS: true,
         allowTaint: false,
-        width: 165,
-        height: 360,
       });
       
-      // Create a new 360x360 canvas and center the 165x360 image
-      const squareCanvas = document.createElement('canvas');
-      squareCanvas.width = 360;
-      squareCanvas.height = 360;
-      const ctx = squareCanvas.getContext('2d')!;
+      // Create a 165x360 canvas to match local file dimensions
+      const outputCanvas = document.createElement('canvas');
+      outputCanvas.width = 165;
+      outputCanvas.height = 360;
+      const ctx = outputCanvas.getContext('2d')!;
       
-      // Center the 165x360 image horizontally in the 360x360 canvas
-      const offsetX = (360 - 165) / 2;
-      ctx.drawImage(originalCanvas, offsetX, 0);
+      // Center the captured image within the 165x360 canvas
+      const scale = Math.min(165 / originalCanvas.width, 360 / originalCanvas.height);
+      const scaledWidth = originalCanvas.width * scale;
+      const scaledHeight = originalCanvas.height * scale;
+      const offsetX = (165 - scaledWidth) / 2;
+      const offsetY = (360 - scaledHeight) / 2;
       
-      // Download the square canvas as PNG
-      squareCanvas.toBlob((blob) => {
+      ctx.drawImage(originalCanvas, offsetX, offsetY, scaledWidth, scaledHeight);
+      
+      // Download the output canvas as PNG
+      outputCanvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
