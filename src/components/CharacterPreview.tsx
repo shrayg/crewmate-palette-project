@@ -1,17 +1,20 @@
 import { CurrentCharacter } from '@/types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Download, Shuffle, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface CharacterPreviewProps {
   character: CurrentCharacter;
+  twitterHandle: string;
+  onTwitterHandleChange: (handle: string) => void;
   onRandomize: () => void;
   onDownload: () => void;
   onReset: () => void;
 }
 
-export function CharacterPreview({ character, onRandomize, onDownload, onReset }: CharacterPreviewProps) {
+export function CharacterPreview({ character, twitterHandle, onTwitterHandleChange, onRandomize, onDownload, onReset }: CharacterPreviewProps) {
   const { toast } = useToast();
 
   const handleDownload = () => {
@@ -113,6 +116,17 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
                     />
                   </div>
                 )}
+                
+                {/* Twitter handle in bottom right */}
+                {twitterHandle && (
+                  <div className="absolute bottom-0 right-0 text-white text-sm font-hey-comic drop-shadow-lg"
+                       style={{ 
+                         textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                         transform: 'translate(-8px, -8px)'
+                       }}>
+                    @{twitterHandle}
+                  </div>
+                )}
               </div>
             ) : (
               <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">
@@ -161,6 +175,25 @@ export function CharacterPreview({ character, onRandomize, onDownload, onReset }
           </div>
         </Card>
       )}
+
+      {/* Twitter Handle Input */}
+      <Card className="p-4 bg-card/30 backdrop-blur-sm border-primary/20 mb-6">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground" htmlFor="twitter-handle">
+            Twitter Handle (optional)
+          </label>
+          <Input
+            id="twitter-handle"
+            placeholder="Enter your Twitter handle..."
+            value={twitterHandle}
+            onChange={(e) => onTwitterHandleChange(e.target.value)}
+            className="bg-input/50 border-primary/30"
+          />
+          <p className="text-xs text-muted-foreground">
+            Your handle will appear in the bottom right of the downloaded image
+          </p>
+        </div>
+      </Card>
 
       {/* Action Buttons */}
       <div className="space-y-3">

@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas';
 export function useCrewmateGenerator() {
   const [data] = useState<CrewmateData>(crewmateData);
   const [currentCharacter, setCurrentCharacter] = useState<CurrentCharacter>({});
+  const [twitterHandle, setTwitterHandle] = useState<string>('');
 
   const selectItem = useCallback((category: ItemCategory, item: CrewmateItem | null) => {
     setCurrentCharacter(prev => {
@@ -155,6 +156,8 @@ export function useCrewmateGenerator() {
   return {
     data,
     currentCharacter,
+    twitterHandle,
+    setTwitterHandle,
     selectItem,
     randomizeCharacter,
     clearCharacter,

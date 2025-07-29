@@ -6,6 +6,8 @@ export function CrewmateGenerator() {
   const {
     data,
     currentCharacter,
+    twitterHandle,
+    setTwitterHandle,
     selectItem,
     randomizeCharacter,
     downloadCharacter,
@@ -55,6 +57,8 @@ export function CrewmateGenerator() {
           <div className="lg:sticky lg:top-8 h-fit">
             <CharacterPreview
               character={currentCharacter}
+              twitterHandle={twitterHandle}
+              onTwitterHandleChange={setTwitterHandle}
               onRandomize={randomizeCharacter}
               onDownload={downloadCharacter}
               onReset={clearCharacter}
