@@ -77,15 +77,13 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Use html2canvas to capture at 165x360
+      // Capture the element at its natural displayed size
       const originalCanvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
         scale: 1,
         logging: false,
         useCORS: true,
         allowTaint: false,
-        width: 165,
-        height: 360,
       });
       
       // Create a new 360x360 canvas and center the original image
@@ -94,9 +92,10 @@ export function useCrewmateGenerator() {
       squareCanvas.height = 360;
       const ctx = squareCanvas.getContext('2d')!;
       
-      // Center the 165x360 image in the 360x360 canvas
-      const offsetX = (360 - 165) / 2;
-      ctx.drawImage(originalCanvas, offsetX, 0);
+      // Center the captured image in the 360x360 canvas
+      const offsetX = (360 - originalCanvas.width) / 2;
+      const offsetY = (360 - originalCanvas.height) / 2;
+      ctx.drawImage(originalCanvas, offsetX, offsetY);
       
       // Download the square canvas as PNG
       squareCanvas.toBlob((blob) => {
