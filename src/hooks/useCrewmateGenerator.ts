@@ -78,7 +78,7 @@ export function useCrewmateGenerator() {
       }
       
       // Capture the element at higher resolution to match preview quality
-      const canvas = await html2canvas(previewElement, {
+      const originalCanvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
         scale: 2, // Higher resolution for better quality
         logging: false,
@@ -88,8 +88,18 @@ export function useCrewmateGenerator() {
         height: 320, // Match the preview container height
       });
       
-      // Download the canvas as PNG
-      canvas.toBlob((blob) => {
+      // Create stretched canvas (2x vertical stretch)
+      const stretchedCanvas = document.createElement('canvas');
+      stretchedCanvas.width = originalCanvas.width;
+      stretchedCanvas.height = originalCanvas.height * 2; // 2x vertical stretch
+      const ctx = stretchedCanvas.getContext('2d')!;
+      
+      // Draw the original canvas stretched vertically
+      ctx.drawImage(originalCanvas, 0, 0, originalCanvas.width, originalCanvas.height, 
+                   0, 0, stretchedCanvas.width, stretchedCanvas.height);
+      
+      // Download the stretched canvas as PNG
+      stretchedCanvas.toBlob((blob) => {
         if (!blob) return;
         
         const url = URL.createObjectURL(blob);
