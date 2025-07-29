@@ -195,6 +195,18 @@ export function CharacterPreview({ character, twitterHandle, onTwitterHandleChan
         </div>
       </Card>
 
+      {/* Contract Address */}
+      <Card className="p-4 bg-card/30 backdrop-blur-sm border-primary/20 mb-6">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-foreground">
+            Contract Address
+          </label>
+          <div className="p-2 bg-input/50 border border-primary/30 rounded text-sm text-muted-foreground">
+            Contract Address
+          </div>
+        </div>
+      </Card>
+
       {/* Action Buttons */}
       <div className="space-y-3">
         {/* Top row with Reset and Randomize buttons */}
