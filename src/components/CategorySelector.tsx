@@ -176,7 +176,7 @@ export function CategorySelector({
                   </div>
                   
                   <ScrollArea className="flex-1">
-                    <div className="p-4">
+                    <div className="p-4 pb-8">
                       {renderItemGrid(key)}
                     </div>
                   </ScrollArea>
