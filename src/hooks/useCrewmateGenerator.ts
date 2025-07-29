@@ -77,13 +77,15 @@ export function useCrewmateGenerator() {
         return;
       }
       
-      // Capture the element at its natural displayed size
+      // Capture the element at higher resolution to match preview quality
       const canvas = await html2canvas(previewElement, {
         backgroundColor: 'transparent',
-        scale: 1,
+        scale: 2, // Higher resolution for better quality
         logging: false,
         useCORS: true,
         allowTaint: false,
+        width: 320, // Match the preview container width
+        height: 320, // Match the preview container height
       });
       
       // Download the canvas as PNG
