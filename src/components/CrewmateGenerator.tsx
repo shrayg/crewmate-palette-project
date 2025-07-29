@@ -26,7 +26,7 @@ export function CrewmateGenerator() {
             Contract Address
           </label>
           <div className="text-white text-sm font-mono">
-            2oQNkePakuPbHzrVVkQ875WHeewLHCd2cAwfwiLQbonk
+            Soon.
           </div>
         </div>
       </div>
