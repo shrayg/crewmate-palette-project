@@ -19,6 +19,18 @@ export function CrewmateGenerator() {
       {/* Starfield background */}
       <div className="starfield" />
       
+      {/* Contract Address - Top Left */}
+      <div className="absolute top-4 left-4 z-20">
+        <div className="px-3 py-2 bg-black/80 border border-gray-600 rounded-lg backdrop-blur-sm">
+          <label className="block text-xs font-medium text-gray-300 mb-1">
+            Contract Address
+          </label>
+          <div className="text-white text-sm font-mono">
+            Contract Address
+          </div>
+        </div>
+      </div>
+      
       {/* Community Button - Top Right */}
       <div className="absolute top-4 right-4 z-20">
         <a 
@@ -49,19 +61,6 @@ export function CrewmateGenerator() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Create unique Among Us characters by selecting colors, outfits, pets, hats, and visors.
           </p>
-          
-          {/* Contract Address */}
-          <div className="max-w-md mx-auto">
-            <label className="block text-sm font-medium text-muted-foreground mb-2">
-              Contract Address
-            </label>
-            <input
-              type="text"
-              readOnly
-              value="Contract Address"
-              className="w-full px-3 py-2 bg-background border border-border rounded-lg text-center text-sm font-mono"
-            />
-          </div>
         </div>
 
         {/* Main Layout - Split View */}
